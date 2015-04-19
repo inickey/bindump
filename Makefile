@@ -16,10 +16,14 @@ PKG_CFLAGS =
 PKG_LFLAGS =
 endif
 
+DESTDIR ?= /usr
+PREFIX ?= $(DESTDIR)
+
 DBG_CFLAGS = -ggdb -g -DDEBUG -Wall
 DBG_LFLAGS = -ggdb -g -Wall
 CFLAGS     = $(ADD_CFLAGS) $(PKG_CFLAGS) \
-             -DVERSION=\"$(VERSION)\" -DPACKAGE=\"$(PACKAGE)\"
+             -DVERSION=\"$(VERSION)\" -DPACKAGE=\"$(PACKAGE)\" \
+             -DPREFIX=\"$(PREFIX)\" -DDESTDIR=\"$(DESTDIR)\"
 LFLAGS     = $(ADD_LFLAGS) $(PKG_LFLAGS)
 
 OBJ_DIR    = .obj/
@@ -95,10 +99,10 @@ $(DIST):
 
 $(INSTALL): $(TARGET)
 	$(QUIET) echo "Installing $(TARGET)..."
-	$(QUIET) ./install.sh --target $(TARGET) --version $(VERSION)
+	$(QUIET) ./install.sh --target "$(TARGET)" --version "$(VERSION)" --prefix "$(PREFIX)" --dest-dir "$(DESTDIR)"
 
 $(UNINSTALL):
 	$(QUIET) echo "Uninstalling $(TARGET)..."
-	$(QUIET) ./uninstall.sh --target $(TARGET) --version $(VERSION)
+	$(QUIET) ./uninstall.sh --target "$(TARGET)" --version "$(VERSION)" --prefix "$(PREFIX)" --dest-dir "$(DESTDIR)"
 
 include $(wildcard $(OBJ_DIR)/*.d)
