@@ -33,8 +33,9 @@ rm -f ${DESTDIR}/bin/bd
 # Copying executable to /usr/bin
 # Not using symlink for easier creating short command in
 # deb-package without postinstall script
-cp bindump ${DESTDIR}/bin
-cp bindump ${DESTDIR}/bin/bd
+cp ${TARGET} ${DESTDIR}/bin
+cp ${TARGET} ${DESTDIR}/bin/bd
 
 # Set execution privileges for each user
 chmod oga+x ${DESTDIR}/bin/bindump
+chmod oga+x ${DESTDIR}/bin/bd
