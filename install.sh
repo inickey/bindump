@@ -23,14 +23,18 @@ while true ; do
     esac
 done
 
+# Preparing directories if not exists
+mkdir -p ${DESTDIR}/bin
+
 # Removing previous versions
 rm -f ${DESTDIR}/bin/bindump
 rm -f ${DESTDIR}/bin/bd
 
 # Copying executable to /usr/bin
+# Not using symlink for easier creating short command in
+# deb-package without postinstall script
 cp bindump ${DESTDIR}/bin
-# Creating symlink for short name
-ln -s ${DESTDIR}/bin/bindump ${DESTDIR}/bin/bd
+cp bindump ${DESTDIR}/bin/bd
 
 # Set execution privileges for each user
 chmod oga+x ${DESTDIR}/bin/bindump
