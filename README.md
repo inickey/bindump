@@ -1,5 +1,11 @@
 # Binary dump utility
 
+<p align="right">
+   <a href="COPYING">
+   <img src="https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat">
+   </a>
+</p>
+
 This is small and simple utility to view binary dumps of any
 files you need. I needed it for viewing eeprom-images for my
 avr-microcontrollers projects. May be it would be useful for
