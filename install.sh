@@ -35,7 +35,3 @@ rm -f ${DESTDIR}/bin/bd
 # deb-package without postinstall script
 cp ${TARGET} ${DESTDIR}/bin
 cp ${TARGET} ${DESTDIR}/bin/bd
-
-# Set execution privileges for each user
-chmod oga+x ${DESTDIR}/bin/bindump
-chmod oga+x ${DESTDIR}/bin/bd
