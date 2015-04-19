@@ -73,14 +73,15 @@ To configure output you can use this flags:
 -s	[count]	Skips count of bytes from the start
 -l	[count]	Sets the length of bytes to show
 -c	[count] Sets the count of bytes to show in one line
--A		Turn on the ASCII values near the binaries
-		like 001110010[r]
--H		Turn on the hex values near the binaries
--D		Turn on the decimal values near the binaries
--o		Turn on offsets in start of each line
--a		Turn on the ASCII values in ending of each line
--v		Shows version
--h		Shows help
+-A              Turn on the ASCII values near the binaries
+                like 001110010[r]
+-H              Turn on the hex values near the binaries
+-D              Turn on the decimal values near the binaries
+-S              Do not split bytes, show all together
+-o              Turn on offsets in start of each line
+-a              Turn on the ASCII values in ending of each line
+-v              Shows version
+-h              Shows help
 ```
 
 ---

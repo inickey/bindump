@@ -13,6 +13,7 @@ unsigned int count = 8;
 unsigned int show_ascii = FALSE;
 unsigned int show_hex = FALSE;
 unsigned int show_dec = FALSE;
+unsigned int split = TRUE;
 unsigned int show_offset = FALSE;
 unsigned int show_ascii_buffer = FALSE;
 
@@ -28,6 +29,7 @@ show_help(void)
 	printf("\t-A\tShow ASCII values near the binary\n");
 	printf("\t-H\tShow hex values near the binary\n");
 	printf("\t-D\tShow dec values near the binary\n");
+	printf("\t-S\tDo not split binary bytes\n");
 	printf("\t-o\tShow offsets on start of every string\n");
 	printf("\t-a\tShow ASCII string after binary bytes\n");
 	printf("\t-v\tShow version info\n");
@@ -126,6 +128,10 @@ parse_args(int argc, char **argv)
 					show_dec = TRUE;
 					break;
 
+				case 'S':
+					split = FALSE;
+					break;
+
 				case 'o':
 					show_offset = TRUE;
 					break;
@@ -211,7 +217,8 @@ main(int argc, char **argv)
 				if(show_dec)
 					fprintf(stdout, "[%03d]", c);
 
-				fprintf(stdout, " ");
+				if(split)
+					fprintf(stdout, " ");
 
 				offset++;
 				length--;
