@@ -5,6 +5,10 @@ files you need. I needed it for viewing eeprom-images for my
 avr-microcontrollers projects. May be it would be useful for
 some of your purposes, either way I publishing it here.
 
+<p align="center">
+   <img src="screenshot.png">
+</p>
+
 Features:
 
 - Show sets of bytes in binary presentation
