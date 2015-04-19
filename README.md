@@ -30,6 +30,13 @@ $ git clone https://github.com/inickey/bindump && cd bindump
 $ make
 $ sudo make install
 ```
+If you using Ubuntu GNU/Linux, you can install this software
+from my ppa, it'll be faster and easier
+```bash
+$ sudo add-apt-repository ppa:inickey/ppa
+$ sudo apt-get update
+$ sudo apt-get install bindump
+```
 
 ## How to uninstall
 ```bash
