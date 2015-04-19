@@ -70,9 +70,9 @@ $ cat my_big_file.bin | bindump | less
 
 To configure output you can use this flags:
 ```
--s	[count]	Skips count of bytes from the start
--l	[count]	Sets the length of bytes to show
--c	[count] Sets the count of bytes to show in one line
+-s      [count] Skips count of bytes from the start
+-l      [count] Sets the length of bytes to show
+-c      [count] Sets the count of bytes to show in one line
 -A              Turn on the ASCII values near the binaries
                 like 001110010[r]
 -H              Turn on the hex values near the binaries
