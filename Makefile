@@ -85,15 +85,16 @@ $(CHANGELOG):
 	fi
 	$(QUIET) echo "" >> $@
 
+$(DIST): DIST_DIR = $(TARGET)-$(VERSION)
 $(DIST): DIST_NAME = $(TARGET)-$(VERSION)-$(shell date +%d%m%y).tar.gz
 $(DIST): CURR_PWD  = $(shell pwd)
 $(DIST): $(CHANGELOG)
 $(DIST):
 	$(QUIET) echo "Making $(DIST_NAME)"
-	$(QUIET) mkdir $(CURR_PWD)/dist/$(TARGET) -p
-	$(QUIET) cp $(DIST_FILES) $(CURR_PWD)/dist/$(TARGET) -f
+	$(QUIET) mkdir $(CURR_PWD)/dist/$(DIST_DIR) -p
+	$(QUIET) cp $(DIST_FILES) $(CURR_PWD)/dist/$(DIST_DIR) -f
 	$(QUIET) cd $(CURR_PWD)/dist/ && \
-                 tar -czvf $(DIST_NAME) $(TARGET) > /dev/null
+                 tar -czvf $(DIST_NAME) $(DIST_DIR) > /dev/null
 	$(QUIET) mv $(CURR_PWD)/dist/$(DIST_NAME) $(CURR_PWD) && \
                  rm -rf dist
 
