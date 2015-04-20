@@ -41,6 +41,8 @@ void
 show_version(void)
 {
 	printf("%s %s\n", PACKAGE, VERSION);
+	printf("Check for newer versions on "
+		   "https://github.com/inickey/bindump\n");
 	return;
 }
 
