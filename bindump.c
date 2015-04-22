@@ -210,7 +210,10 @@ main(int argc, char **argv)
 	}
 
 	while(skip-- > 0)
+	{
 		fgetc(stdin);
+		offset++;
+	}
 
 	while((c != EOF) && (length > 0))
 	{
