@@ -1,4 +1,5 @@
-PACKAGE    = $(shell basename $(shell pwd))
+DIRNAME    = $(shell basename $(shell pwd))
+PACKAGE    = $(firstword $(subst -, , $(DIRNAME)))
 LIBS       =
 VERSION    = $(shell ./version.sh)
 ADD_CFLAGS =
