@@ -1,53 +1,54 @@
-DIRNAME    = $(shell basename $(shell pwd))
-PACKAGE    = $(firstword $(subst -, , $(DIRNAME)))
-LIBS       =
-VERSION    = $(shell ./version.sh)
-ADD_CFLAGS =
-ADD_LFLAGS =
-EXTRA_DIST =
+DIRNAME     = $(shell basename $(shell pwd))
+PACKAGE     = $(firstword $(subst -, , $(DIRNAME)))
+LIBS        =
+VERSION     = $(shell ./version.sh)
+ADD_CFLAGS ?=
+ADD_LFLAGS ?=
+EXTRA_DIST  =
 
-CC         = $(shell which cc)
-PKG        = $(shell which pkg-config)
+CC         ?= $(shell which cc)
+PKG        ?= $(shell which pkg-config)
 
 ifneq ($(strip $(LIBS)),)
-PKG_CFLAGS = $(shell $(PKG) $(LIBS) --cflags)
-PKG_LFLAGS = $(shell $(PKG) $(LIBS) --libs)
+PKG_CFLAGS  = $(shell $(PKG) $(LIBS) --cflags)
+PKG_LFLAGS  = $(shell $(PKG) $(LIBS) --libs)
 else
-PKG_CFLAGS =
-PKG_LFLAGS =
+PKG_CFLAGS  =
+PKG_LFLAGS  =
 endif
 
-DESTDIR ?= /usr
-PREFIX ?= $(DESTDIR)
+DESTDIR    ?= /usr
+PREFIX     ?= $(DESTDIR)
 
-DBG_CFLAGS = -ggdb -g -DDEBUG -Wall
-DBG_LFLAGS = -ggdb -g -Wall
-CFLAGS     = $(ADD_CFLAGS) $(PKG_CFLAGS) \
-             -DVERSION=\"$(VERSION)\" -DPACKAGE=\"$(PACKAGE)\" \
-             -DPREFIX=\"$(PREFIX)\" -DDESTDIR=\"$(DESTDIR)\"
-LFLAGS     = $(ADD_LFLAGS) $(PKG_LFLAGS)
+DBG_CFLAGS  = -ggdb -g -DDEBUG -Wall
+DBG_LFLAGS  = -ggdb -g -Wall
+CFLAGS      = $(ADD_CFLAGS) $(PKG_CFLAGS) \
+              -DVERSION=\"$(VERSION)\" -DPACKAGE=\"$(PACKAGE)\" \
+              -DPREFIX=\"$(PREFIX)\" -DDESTDIR=\"$(DESTDIR)\"
+LFLAGS      = $(ADD_LFLAGS) $(PKG_LFLAGS)
 
-OBJ_DIR    = .obj/
-DIST_FILES = Makefile .version version.sh install.sh \
-             README.md AUTHORS COPYING ChangeLog.txt \
-             $(wildcard *.c) $(wildcard *.h) $(EXTRA_DIST)
+OBJ_DIR     = .obj/
+DIST_FILES  = Makefile .version version.sh install.sh \
+              README.md AUTHORS COPYING ChangeLog.txt \
+              $(wildcard *.c) $(wildcard *.h) $(EXTRA_DIST)
 
-SOURCES    = $(wildcard *.c)
-OBJECTS    = $(addprefix $(OBJ_DIR)/, $(SOURCES:.c=.o))
+SOURCES     = $(wildcard *.c)
+OBJECTS     = $(addprefix $(OBJ_DIR)/, $(SOURCES:.c=.o))
 
-QUIET      = @
+QUIET       = @
 
-ALL        = all
-TARGET     = $(PACKAGE)
-DEBUG      = debug
-REBUILD    = rebuild
-DREBUILD   = drebuild
-CLEAN      = clean
-CHANGELOG  = ChangeLog.txt
-DISTCLEAN  = distclean
-DIST       = dist
-INSTALL    = install
-UNINSTALL  = uninstall
+ALL         = all
+TARGET      = $(PACKAGE)
+DEBUG       = debug
+REBUILD     = rebuild
+DREBUILD    = drebuild
+CLEAN       = clean
+CHANGELOG   = ChangeLog.txt
+DISTCLEAN   = distclean
+DIST        = dist
+DDIST       = dailydist
+INSTALL     = install
+UNINSTALL   = uninstall
 
 $(ALL): $(TARGET)
 
@@ -86,16 +87,27 @@ $(CHANGELOG):
 	fi
 	$(QUIET) echo "" >> $@
 
-$(DIST): DIST_DIR = $(TARGET)-$(VERSION)
-$(DIST): DIST_NAME = $(TARGET)-$(VERSION)-$(shell date +%d%m%y).tar.gz
+$(DIST): DIST_NAME = $(TARGET)-$(VERSION).tar.gz
 $(DIST): CURR_PWD  = $(shell pwd)
 $(DIST): $(CHANGELOG)
 $(DIST):
 	$(QUIET) echo "Making $(DIST_NAME)"
-	$(QUIET) mkdir $(CURR_PWD)/dist/$(DIST_DIR) -p
-	$(QUIET) cp $(DIST_FILES) $(CURR_PWD)/dist/$(DIST_DIR) -f
+	$(QUIET) mkdir $(CURR_PWD)/dist/$(TARGET) -p
+	$(QUIET) cp $(DIST_FILES) $(CURR_PWD)/dist/$(TARGET) -f
 	$(QUIET) cd $(CURR_PWD)/dist/ && \
-                 tar -czvf $(DIST_NAME) $(DIST_DIR) > /dev/null
+                 tar -czvf $(DIST_NAME) $(TARGET) > /dev/null
+	$(QUIET) mv $(CURR_PWD)/dist/$(DIST_NAME) $(CURR_PWD) && \
+                 rm -rf dist
+
+$(DDIST): DIST_NAME = $(TARGET)-$(VERSION)-$(shell date +%d%m%y).tar.gz
+$(DDIST): CURR_PWD  = $(shell pwd)
+$(DDIST): $(CHANGELOG)
+$(DDIST):
+	$(QUIET) echo "Making $(DIST_NAME)"
+	$(QUIET) mkdir $(CURR_PWD)/dist/$(TARGET) -p
+	$(QUIET) cp $(DIST_FILES) $(CURR_PWD)/dist/$(TARGET) -f
+	$(QUIET) cd $(CURR_PWD)/dist/ && \
+                 tar -czvf $(DIST_NAME) $(TARGET) > /dev/null
 	$(QUIET) mv $(CURR_PWD)/dist/$(DIST_NAME) $(CURR_PWD) && \
                  rm -rf dist
 
